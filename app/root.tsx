@@ -34,7 +34,7 @@ export const configuration: Configuration = {
   auth: {
     clientId: "cbaeae5e-cede-4a4a-ac99-63731f4679d7",
     // clientId: "7b8e4862-5633-4baf-978a-e8f8459126b5",
-    redirectUri: "https://etti.local.localhost/etti/callback",
+    redirectUri: "https://etti.blitzcloud.me/etti/callback",
     authority:
       "https://login.microsoftonline.com/2d8cc8ba-8dda-4334-9e5c-fac2092e9bac",
   },
