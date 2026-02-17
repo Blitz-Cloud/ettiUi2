@@ -1,0 +1,16 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm
+RUN pnpm i
+
+# We do NOT copy the source code here for dev mode.
+# It is synced via volumes in docker-compose.
+
+EXPOSE 3000
+
+# For Vite, use 'npm run dev -- --host' to allow external connections
+CMD ["npm", "run", "dev", "--", "--host"]

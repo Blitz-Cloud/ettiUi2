@@ -9,6 +9,12 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { MsalProvider } from "@azure/msal-react";
+import type { Configuration } from "@azure/msal-browser";
+import { LogLevel, PublicClientApplication } from "@azure/msal-browser";
+import Navbar from "./components/my/navbar";
+import DefaultLayout from "./components/layout/default";
+import { TenantProvider } from "./context/tenantManager";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,6 +29,48 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+// MSAL configuration
+export const configuration: Configuration = {
+  auth: {
+    clientId: "cbaeae5e-cede-4a4a-ac99-63731f4679d7",
+    // clientId: "7b8e4862-5633-4baf-978a-e8f8459126b5",
+    redirectUri: "https://etti.local.localhost/etti/callback",
+    authority:
+      "https://login.microsoftonline.com/2d8cc8ba-8dda-4334-9e5c-fac2092e9bac",
+  },
+  cache: {
+    cacheLocation: "localStorage", // Configures cache location. "sessionStorage" is more secure, but "localStorage" gives you SSO between tabs.
+    // storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
+  },
+  system: {
+    loggerOptions: {
+      loggerCallback: (level, message, containsPii) => {
+        if (containsPii) {
+          return;
+        }
+        switch (level) {
+          case LogLevel.Error:
+            console.error(message);
+            return;
+          case LogLevel.Info:
+            console.info(message);
+            return;
+          case LogLevel.Verbose:
+            console.debug(message);
+            return;
+          case LogLevel.Warning:
+            console.warn(message);
+            return;
+          default:
+            return;
+        }
+      },
+    },
+  },
+};
+
+export const pca = new PublicClientApplication(configuration);
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -33,9 +81,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <MsalProvider instance={pca}>
+          <TenantProvider>
+            <DefaultLayout>
+              <Navbar />
+              {children}
+              <ScrollRestoration />
+              <Scripts />
+            </DefaultLayout>
+          </TenantProvider>
+        </MsalProvider>
       </body>
     </html>
   );
