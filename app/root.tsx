@@ -9,7 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import { MsalProvider } from "@azure/msal-react";
+import { MsalProvider, useMsal } from "@azure/msal-react";
 import type { Configuration } from "@azure/msal-browser";
 import { LogLevel, PublicClientApplication } from "@azure/msal-browser";
 import Navbar from "./components/my/navbar";

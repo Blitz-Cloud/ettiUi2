@@ -15,7 +15,7 @@ import { Navigate, useNavigate, useSearchParams } from "react-router";
 import { Loader2Icon } from "lucide-react";
 import { InteractionType } from "@azure/msal-browser";
 import MicrosoftBtn from "~/components/my/microsftBtn";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AuthenticatedTemplate from "~/components/my/AuthenticatedTemplate";
 import UnauthenticatedTemplate from "~/components/my/UnauthenticatedTemplate";
 
@@ -28,7 +28,11 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Auth() {
   const { instance, accounts, inProgress } = useMsal();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [redirectUri, setRedirectUri] = useState<string>("");
+  useEffect(() => {
+    setRedirectUri(`https://${window.location.host}/etti/callback`);
+  }, []);
+
   const navigate = useNavigate();
 
   return (
@@ -58,6 +62,7 @@ export default function Auth() {
                     instance.loginRedirect({
                       scopes: ["User.Read"],
                       prompt: "select_account",
+                      redirectUri: redirectUri,
                     });
                   }}
                 />
