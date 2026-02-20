@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Route } from "../+types/root";
 import { ApiRequest } from "~/lib/utils";
+import MarkdownRenderer from "~/components/my/mdRenderer";
 
 export default function PostView({ params }: Route.ComponentProps) {
   const postId = params.postId;
@@ -17,6 +18,10 @@ export default function PostView({ params }: Route.ComponentProps) {
   if (content.length == 0) {
     return <div>Hello</div>;
   } else {
-    return <div>{content}</div>;
+    return (
+      <div>
+        <MarkdownRenderer content={content} />
+      </div>
+    );
   }
 }
