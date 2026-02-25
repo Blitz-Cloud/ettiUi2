@@ -8,10 +8,7 @@ import type { Category } from "~/types/categories";
 import { TenantContext } from "~/context/tenantManager";
 
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Cagorii" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+  return [{ title: "Cagorii" }, { name: "description", content: "" }];
 }
 
 export default function CategoryView() {
@@ -42,8 +39,7 @@ export default function CategoryView() {
               <Card className="min-h- [250px]">
                 <CardHeader>
                   <CardTitle>
-                    {category.Name.split("-")[1].toLocaleUpperCase()} | DEBUG:{" "}
-                    {category.Name}
+                    {category.Name.split("-")[1].toLocaleUpperCase()}
                   </CardTitle>
                 </CardHeader>
               </Card>

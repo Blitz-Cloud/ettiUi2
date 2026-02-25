@@ -3,6 +3,10 @@ import type { Route } from "../+types/root";
 import { ApiRequest } from "~/lib/utils";
 import MarkdownRenderer from "~/components/my/mdRenderer";
 
+export function meta({}: Route.MetaArgs) {
+  return [{ title: "Post" }, { name: "description", content: "" }];
+}
+
 export default function PostView({ params }: Route.ComponentProps) {
   const postId = params.postId;
   const [content, setContent] = useState<string>("");

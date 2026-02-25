@@ -14,8 +14,8 @@ import { ApiRequest } from "~/lib/utils";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Autentificare in curs" },
+    { name: "description", content: "" },
   ];
 }
 

@@ -17,10 +17,7 @@ import {
 import { ApiRequest } from "~/lib/utils";
 
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Posts" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+  return [{ title: "Posts" }, { name: "description", content: "" }];
 }
 
 export default function Home() {
