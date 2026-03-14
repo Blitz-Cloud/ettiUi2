@@ -9,13 +9,13 @@ export function meta({}: Route.MetaArgs) {
 
 export default function PostView({ params }: Route.ComponentProps) {
   const postId = params.postId;
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState("");
   console.log(postId);
   useEffect(() => {
     ApiRequest(`/post/${postId}`, {}).then((data) => {
       data.json().then((data) => {
         console.log(data);
-        setContent(data.Content);
+        setContent(data);
       });
     });
   }, []);
@@ -24,7 +24,11 @@ export default function PostView({ params }: Route.ComponentProps) {
   } else {
     return (
       <div>
-        <MarkdownRenderer content={content} />
+        <div className=" my-2">
+          <h1 className="text-2xl font-bold">{content.Title}</h1>
+          <p>{content.Description}</p>
+        </div>
+        <MarkdownRenderer content={content.Content} />
       </div>
     );
   }
