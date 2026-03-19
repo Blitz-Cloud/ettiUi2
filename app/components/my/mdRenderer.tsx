@@ -1,57 +1,74 @@
-import React, { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
+// import React, { useEffect, useState } from "react";
+// import ReactMarkdown from "react-markdown";
+// import remarkMath from "remark-math";
+// import rehypeKatex from "rehype-katex";
+// // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  dracula,
-  solarizedlight,
-  nightOwl,
-} from "react-syntax-highlighter/dist/cjs/styles/prism";
-// import { useTheme } from "~/context/themeManager";
-import { solarizedLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
+// import {
+//   dracula,
+//   solarizedlight,
+//   nightOwl,
+// } from "react-syntax-highlighter/dist/cjs/styles/prism";
+// // import { useTheme } from "~/context/themeManager";
+
+import { useEffect } from "react";
+
+// import { solarizedLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
 interface MarkdownRendererProps {
   content: string;
 }
 
+// const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
+//   //   const { theme } = useTheme();
+//   const [colorScheme, setColorScheme] = useState();
+//   //   useEffect(() => {
+//   //     if (theme == "light") {
+//   //       setColorScheme(solarizedLight);
+//   //     } else if (theme == "dark") {
+//   //       setColorScheme(nightOwl);
+//   //     }
+//   //   }, [theme]);
+//   console.log(content);
+//   console.log(content.replaceAll("\n", "\r\n"));
+//   return (
+//     <ReactMarkdown
+//     // remarkPlugins={[remarkMath]}
+//     // rehypePlugins={[rehypeKatex]}
+//     // components={{
+//     //   code(props: any) {
+//     //     const { children, className, node, ...rest } = props;
+//     //     const match = /language-(\w+)/.exec(className || "");
+//     //     return match ? (
+//     //       <SyntaxHighlighter
+//     //         {...rest}
+//     //         PreTag="div"
+//     //         children={String(children).replace(/\n$/, "")}
+//     //         language={match[1]}
+//     //         style={solarizedLight}
+//     //       />
+//     //     ) : (
+//     //       <code {...rest} className={className}>
+//     //         {children}
+//     //       </code>
+//     //     );
+//     //   },
+//     // }}
+//     >
+//       {content.replaceAll("\n", "\r\n")}
+//     </ReactMarkdown>
+//   );
+// };
+
+import { useRemark } from "react-remark";
+
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
-  //   const { theme } = useTheme();
-  const [colorScheme, setColorScheme] = useState();
-  //   useEffect(() => {
-  //     if (theme == "light") {
-  //       setColorScheme(solarizedLight);
-  //     } else if (theme == "dark") {
-  //       setColorScheme(nightOwl);
-  //     }
-  //   }, [theme]);
-  return (
-    <ReactMarkdown
-      remarkPlugins={[remarkMath]}
-      rehypePlugins={[rehypeKatex]}
-      components={{
-        code(props: any) {
-          const { children, className, node, ...rest } = props;
-          const match = /language-(\w+)/.exec(className || "");
-          return match ? (
-            <SyntaxHighlighter
-              {...rest}
-              PreTag="div"
-              children={String(children).replace(/\n$/, "")}
-              language={match[1]}
-              style={solarizedLight}
-            />
-          ) : (
-            <code {...rest} className={className}>
-              {children}
-            </code>
-          );
-        },
-      }}
-    >
-      {content}
-    </ReactMarkdown>
-  );
+  const [reactContent, setMarkdownSource] = useRemark();
+
+  useEffect(() => {
+    setMarkdownSource(content);
+  }, []);
+
+  return <div className="prose">{reactContent}</div>;
 };
 
 export default MarkdownRenderer;
