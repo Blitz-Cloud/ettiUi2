@@ -23,8 +23,8 @@ export default function PostView({ params }: Route.ComponentProps) {
     return <div>Hello</div>;
   } else {
     return (
-      <div className="">
-        <div className=" my-2">
+      <div className="prose">
+        <div className="my-2 ">
           <h1 className="text-2xl font-bold">{content.Title}</h1>
           <p>{content.Description}</p>
         </div>
